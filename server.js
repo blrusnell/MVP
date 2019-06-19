@@ -1,10 +1,10 @@
-// const express = require('express')
-// const app = express()
-// const port = 19000
-// const request = require('request');
-// const bodyParser = require('body-parser')
+const express = require('express')
+const app = express()
+const port = 19000
+const request = require('request');
+const bodyParser = require('body-parser')
 
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // app.get('/', (req, res) => {
 //     console.log(req.params);
@@ -15,4 +15,6 @@
 //     res.send()
 // })
 
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.get('/', (req, res) => res.send('hello world'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
