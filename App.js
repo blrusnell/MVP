@@ -5,18 +5,20 @@ import axios from 'axios';
 
 
 
+
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      input: 'ENTER ZIP CODE',
-        description: 'hi',
-        icon: '01d.png',
-        main: 'clear',
-        temp: 200,
-        temp_max: 300,
-        temp_min: 199
+      input: 'ZIP CODE...',
+      city: 'Austin',
+      description: 'Clear Skies',
+      icon: '01d.png',
+      main: 'clear',
+      temp: 300,
+      temp_max: 312,
+      temp_min: 300
       
 
     }
@@ -25,6 +27,7 @@ export default class App extends Component {
   handleZipCodeInput = () => {
     axios.get(`${API_URL}zip=${this.state.input}&APPID=${API_KEY}`)
     .then((response) => {
+      console.log(response.data)
       this.setState({
         description: response.data.weather[0].description,
         icon: response.data.weather[0].icon,
@@ -37,12 +40,16 @@ export default class App extends Component {
     .catch(error => console.log(error))
   }
 
+  handleKelvinToFahrenheit = (kelvin) => {
+    return Math.round(kelvin * (9/5) - 459.67);
+  }
+
   render() {
     return (
       <View style={{ flexDirection: 'column'}}>
         <View style={{
           flexDirection: 'column',
-          backgroundColor: 'powderblue',
+          backgroundColor: '#2F3C7E',
           height: 100,
           padding: 30,
         }}>
@@ -55,32 +62,45 @@ export default class App extends Component {
             }
             )}}
           value={this.state.input}
-          color={'white'}
+          color={'#FBEAEB'}
           fontSize={30}
-          fontFamily={'Trebuchet-BoldItalic'}
+          fontFamily={'Avenir-BookOblique'}
           borderWidth={0}
           clearTextOnFocus={true}
           onSubmitEditing={this.handleZipCodeInput}
           />
         </View>
         <View style={{
-          backgroundColor:'skyblue',
+          backgroundColor:'#FBEAEB',
           height: 600,
           alignItems: 'center'
         }}>
+           <Text style={{
+            color: '#2F3C7E',
+            fontSize: 50,
+            fontFamily:'Avenir-BookOblique'
+            }}>{this.state.city}</Text>
           <Text style={{
-            color: 'white'
-            }}>{this.state.temp}</Text>
+            color: '#2F3C7E',
+            fontSize: 60,
+            fontFamily:'Avenir-BookOblique'
+            }}>{this.handleKelvinToFahrenheit(this.state.temp) + '\u00b0 F'}</Text>
           <Text style={{
-            color: 'white'
+            color: '#2F3C7E',
+            fontSize: 20,
+            fontFamily:'Avenir-BookOblique'
             }}>{this.state.description}</Text>
           <Image style={{width: 200, height: 200}} source={{uri: `${ICON_URL}${this.state.icon}`}}/>
           <Text style={{
-            color: 'white'
-            }}>{this.state.temp_min}</Text>
+            color: '#2F3C7E',
+            fontSize: 20,
+            fontFamily:'Avenir-BookOblique'
+            }}>{'Low     ' + this.handleKelvinToFahrenheit(this.state.temp_min)  + '\u00b0 F'}</Text>
           <Text style={{
-            color: 'white'
-            }}>{this.state.temp_max}</Text>
+            color: '#2F3C7E',
+            fontSize: 20,
+            fontFamily:'Avenir-BookOblique'
+            }}>{'High      ' + this.handleKelvinToFahrenheit(this.state.temp_max)  + '\u00b0 F'}</Text>
         </View>
       </View>
 
