@@ -30,6 +30,7 @@ export default class App extends Component {
       console.log(response.data)
       this.setState({
         description: response.data.weather[0].description,
+        city: response.data.name,
         icon: response.data.weather[0].icon,
         type: response.data.weather[0].main,
         temp: response.data.main.temp,
@@ -78,8 +79,9 @@ export default class App extends Component {
            <Text style={{
             color: '#2F3C7E',
             fontSize: 50,
-            fontFamily:'Avenir-BookOblique'
-            }}>{this.state.city}</Text>
+            fontFamily:'Avenir',
+            marginTop: 20
+            }}>{this.state.city.toUpperCase()}</Text>
           <Text style={{
             color: '#2F3C7E',
             fontSize: 60,
@@ -89,7 +91,7 @@ export default class App extends Component {
             color: '#2F3C7E',
             fontSize: 20,
             fontFamily:'Avenir-BookOblique'
-            }}>{this.state.description}</Text>
+            }}>{this.state.description.toUpperCase()}</Text>
           <Image style={{width: 200, height: 200}} source={{uri: `${ICON_URL}${this.state.icon}`}}/>
           <Text style={{
             color: '#2F3C7E',
