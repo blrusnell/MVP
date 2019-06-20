@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View, AppRegistry, TextInput, Image, TouchableHighlight, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { Text, View, AppRegistry, TextInput, Image, TouchableHighlight, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Asset, SplashScreen } from 'expo';
 import { API_KEY, API_URL, ICON_URL } from 'react-native-dotenv';
 import axios from 'axios';
 
@@ -33,7 +34,8 @@ export default class App extends Component {
         temp: response.data.main.temp,
         temp_max: response.data.main.temp_max,
         temp_min: response.data.main.temp_min,
-        mainScreen: false
+        mainScreen: false,
+        isReady: false
       })
     })
     .catch(error => console.log(error))
@@ -50,8 +52,13 @@ export default class App extends Component {
     });
   }
 
+  componentDidMount() {
+    SplashScreen.hide();
+  }
+
 
   render() {
+
     if (this.state.mainScreen === true) {
       return (
         <TouchableWithoutFeedback onPress={ () => { Keyboard.dismiss() } }>
